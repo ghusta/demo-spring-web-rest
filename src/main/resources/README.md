@@ -1,0 +1,1 @@
+For properties or any resources
