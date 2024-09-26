@@ -74,6 +74,7 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Servlet API (needed for setting up the dispatcher servlet) -->
