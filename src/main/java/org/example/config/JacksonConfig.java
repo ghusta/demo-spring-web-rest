@@ -1,6 +1,7 @@
 package org.example.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,8 @@ public class JacksonConfig {
 
     @Bean
     public MappingJackson2HttpMessageConverter jsonConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = JsonMapper.builder()
+                .build();
         // Customize objectMapper as needed
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }
