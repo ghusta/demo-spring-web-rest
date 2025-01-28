@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spring-framework.version>6.2.2</spring-framework.version>
-        <jackson.version>2.16.2</jackson.version>
+        <jackson.version>2.18.2</jackson.version>
         <logback.version>1.5.16</logback.version>
     </properties>
 
