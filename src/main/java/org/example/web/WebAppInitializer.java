@@ -15,6 +15,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         // Create the 'root' Spring application context
+        // See: https://docs.spring.io/spring-framework/reference/core/beans/java/instantiating-container.html#beans-java-instantiating-container-web
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(AppConfig.class);
 
