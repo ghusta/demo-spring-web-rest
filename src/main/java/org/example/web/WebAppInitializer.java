@@ -4,6 +4,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
 import org.example.config.AppConfig;
+import org.example.config.WebMvcConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -21,10 +22,12 @@ public class WebAppInitializer implements WebApplicationInitializer {
         // If exceptions, prevent application to be deployed in container
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
-        // ℹ️ Optional: Create context for Spring MVC, and pass it to DispatcherServlet
+        // ℹ️ Optional: Create context for Spring MVC, and pass it to DispatcherServlet (see javadoc for WebApplicationInitializer)
+        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+        dispatcherContext.register(WebMvcConfig.class); // MVC-specific beans
 
         // Create DispatcherServlet
-        DispatcherServlet dispatcherServlet = new DispatcherServlet(rootContext);
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
         ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", dispatcherServlet);
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
