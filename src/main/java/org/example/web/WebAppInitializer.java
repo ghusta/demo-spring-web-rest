@@ -11,6 +11,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+/**
+ * @see org.springframework.web.SpringServletContainerInitializer
+ */
 public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
