@@ -16,7 +16,7 @@
 
         <spring-framework.version>7.0.9</spring-framework.version>
         <jackson.version>2.18.10</jackson.version>
-        <logback.version>1.5.18</logback.version>
+        <logback.version>1.5.38</logback.version>
     </properties>
 
     <dependencyManagement>
