@@ -2,6 +2,7 @@ package org.example.web;
 
 import org.example.config.AppConfig;
 import org.example.config.WebMvcConfig;
+import org.example.context.PropertySourcesLoggerInitializer;
 import org.jspecify.annotations.Nullable;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.web.WebApplicationInitializer;
@@ -37,7 +38,9 @@ public class WebAppInitializer
 
     @Override
     protected ApplicationContextInitializer<?> @Nullable [] getRootApplicationContextInitializers() {
-        return null;
+        return new ApplicationContextInitializer<?>[]{
+                new PropertySourcesLoggerInitializer()
+        };
     }
 
     @Override
