@@ -1,39 +1,70 @@
 package org.example.web;
 
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRegistration;
 import org.example.config.AppConfig;
 import org.example.config.WebMvcConfig;
+import org.jspecify.annotations.Nullable;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
+ * @see WebApplicationInitializer
  * @see org.springframework.web.SpringServletContainerInitializer
  */
-public class WebAppInitializer implements WebApplicationInitializer {
+public class WebAppInitializer
+        extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        // Create the 'root' Spring application context
-        // See: https://docs.spring.io/spring-framework/reference/core/beans/java/instantiating-container.html#beans-java-instantiating-container-web
-        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(AppConfig.class);
-
-        // ⚠️ Manage the lifecycle of the root application context
-        // If exceptions, prevent application to be deployed in container
-        servletContext.addListener(new ContextLoaderListener(rootContext));
-
-        // ℹ️ Optional: Create context for Spring MVC, and pass it to DispatcherServlet (see javadoc for WebApplicationInitializer)
-        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-        dispatcherContext.register(WebMvcConfig.class); // MVC-specific beans
-
-        // Create DispatcherServlet
-        DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
-        ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", dispatcherServlet);
-        registration.setLoadOnStartup(1);
-        registration.addMapping("/");
+    protected Class<?> @Nullable [] getRootConfigClasses() {
+        return new Class[]{
+                AppConfig.class
+        };
     }
+
+    @Override
+    protected Class<?> @Nullable [] getServletConfigClasses() {
+        return new Class[]{
+                WebMvcConfig.class
+        };
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{
+                "/"
+        };
+    }
+
+    @Override
+    protected ApplicationContextInitializer<?> @Nullable [] getRootApplicationContextInitializers() {
+        return null;
+    }
+
+    @Override
+    protected ApplicationContextInitializer<?> @Nullable [] getServletApplicationContextInitializers() {
+        return null;
+    }
+
+//    @Override
+//    public void onStartup(ServletContext servletContext) throws ServletException {
+//        // Create the 'root' Spring application context
+//        // See: https://docs.spring.io/spring-framework/reference/core/beans/java/instantiating-container.html#beans-java-instantiating-container-web
+//        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+//        rootContext.register(AppConfig.class);
+//
+//        // ⚠️ Manage the lifecycle of the root application context
+//        // If exceptions, prevent application to be deployed in container
+//        servletContext.addListener(new ContextLoaderListener(rootContext));
+//
+//        // ℹ️ Optional: Create context for Spring MVC, and pass it to DispatcherServlet (see javadoc for WebApplicationInitializer)
+//        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+//        dispatcherContext.register(WebMvcConfig.class); // MVC-specific beans
+//
+//        // Create DispatcherServlet
+//        DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
+//        ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", dispatcherServlet);
+//        registration.setLoadOnStartup(1);
+//        registration.addMapping("/");
+//    }
+
 }
